@@ -1,5 +1,5 @@
 #-----------------------------------------------#
-# CYS Offline Editor (CYSO) by Hunter Browning  #
+# CYS Offline Editor (CYSOE) by Hunter Browning #
 # Start: 02/21/2021                             #
 # Version: ALPHA 0.0.0                          #
 #-----------------------------------------------#
@@ -14,12 +14,14 @@ from pathlib import Path
 # CONSTANTS                                     #
 #-----------------------------------------------#
 
-
+if platform == 'linux' or platform == 'linux2':
+    cysoe_icon = Path(str(os.path.dirname( __file__ )) + '/cysoe.png')
+elif platform == 'win32':
+    cysoe_icon = Path(str(os.path.dirname( __file__ )) + '/cysoe.ico')
 
 #-----------------------------------------------#
 # PRE-PROCESSING                                #
 #-----------------------------------------------#
-
 #-----------------------------------------------#
 # GUI                                           #
 #-----------------------------------------------#
@@ -32,8 +34,6 @@ layout = [[sg.Text('Storygame Properties')],
           [sg.Text('Tags:'), sg.Input(key='-TAGS-')],
           [sg.Button('Save'), sg.Button('Save and Exit')]]
 
-
-cysoe_icon = Path(str(os.path.dirname( __file__ )) + '/cysoe.png')
 window = sg.Window('CYS Offline Editor', layout, icon=cysoe_icon)
 
 #-----------------------------------------------#
