@@ -15,9 +15,9 @@ from pathlib import Path
 #-----------------------------------------------#
 
 if platform == 'linux' or platform == 'linux2':
-    cysoe_icon = Path(str(os.path.dirname( __file__ )) + '/cysoe.png')
+    cysoe_icon = Path(str(os.path.dirname( __file__ )) + '/assets/cysoe.png')
 elif platform == 'win32':
-    cysoe_icon = Path(str(os.path.dirname( __file__ )) + '/cysoe.ico')
+    cysoe_icon = Path(str(os.path.dirname( __file__ )) + '/assets/cysoe.ico')
 
 #-----------------------------------------------#
 # PRE-PROCESSING                                #
@@ -43,7 +43,7 @@ window = sg.Window('CYS Offline Editor', layout, icon=cysoe_icon)
 while True:
     event, values = window.read()
     print(event, values)
-    if event in (sg.WIN_CLOSED):
+    if event == sg.WIN_CLOSED:
         print('Exiting...')
         break
     elif event == 'Save':
