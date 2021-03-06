@@ -49,30 +49,29 @@ mainmenu   = [['File',  ['New', 'Open', 'Save', 'Save As', 'Export / Format']],
               ['Edit',  ['Pages', 'Variables', 'Scripts', 'Items', 'Preferences'],],
               ['Help',  ['CYSOE Documentation', 'CYS Script Documentation', 'Advanced Editor Forum', 'About'],] ]
 
-prop_layout = [[sg.T('Storygame Properties')],
-                    [sg.T('Title:'), sg.Input(key='-TITLE-')],
+prop_layout = [[sg.T('Title:'), sg.Input(key='-TITLE-')],
                     [sg.T('Description:'), sg.Input(key='-DESC-')],
                     [sg.T('Category:'), sg.Combo(cats, enable_events=True, key='-CAT-')],
                     [sg.T('Maturity:'), sg.Combo(mats, enable_events=True, key='-MAT-')],
                     [sg.T('Difficulty:'), sg.Combo(diffs, enable_events=True, key='-DIFF-')],
-                    [sg.T('Tags:'), sg.Combo(tags, enable_events=True, key='-TAGS-')],
-                    [sg.Button('Save'), sg.Button('Save and Exit')]]
+                    [sg.T('Tags:'), sg.Combo(tags, enable_events=True, key='-TAGS-')]]
 
-cnp_layout = [[sg.T('Chapters and Pages')],
-                    [sg.Button('New Chapter')],
+items_layout = [[sg.B('Create New Item')]]
+
+cnp_layout = [[sg.B('New Chapter')],
                     [sg.T('ID'), sg.T('Chapter Title'), sg.T('Chapter Start Page')],
                     [sg.T('1'), sg.Input(key='-CH_TITLE-'), sg.Combo(pages, key='-CH_START-')],
-                    [sg.Button('Save Changes To Chapter'), sg.Button('Delete Entire Chapter')],
+                    [sg.B('Save Changes To Chapter'), sg.B('Delete Entire Chapter')],
                     [sg.T('Pages in Chapter 1')],
-                    [sg.Button('Create New Page')],
-                    [sg.T('Buttons and stuff for editing pages and whatnot')]]
+                    [sg.B('Create New Page')]]
 
 main_window = [[sg.Menu(mainmenu)],
-              [sg.TabGroup([[sg.Tab('Storygame Properties', prop_layout), sg.Tab('Chapters & Pages', cnp_layout)]])]]
+              [sg.TabGroup([[sg.Tab('Storygame Properties', prop_layout), sg.Tab('Items', items_layout), sg.Tab('Chapters & Pages', cnp_layout)]])],
+              [sg.B('Save'), sg.B('Save and Exit')]]
 
 
 
-window = sg.Window('CYS Offline Editor', main_window, icon=cysoe_icon)
+window = sg.Window('CYS Offline Editor', main_window, icon=cysoe_icon, resizable=True, grab_anywhere=True)
 
 #-----------------------------------------------#
 # EVENT LOOP AND CALLBACKS                      #
