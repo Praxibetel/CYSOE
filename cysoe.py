@@ -96,15 +96,15 @@ main = sg.Window('CYS Offline Editor', main_window,
 while True:
     event, values = init_pop.read()
     print(event, values)
-    if event == 'New Project':
+    if event == 'New':
         print('Creating new project directory...')
         break
-    elif event == 'Open Existing Project':
+    elif event == 'Open':
         print('Opening existing project directory...')
         break
-    elif event == 'Exit':
+    elif event in ('Exit', sg.WIN_CLOSED):
         print('Exiting...')
-        break
+        exit()
 
 while True:
     event, values = main.read()
