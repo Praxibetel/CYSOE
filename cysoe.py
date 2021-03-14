@@ -24,26 +24,21 @@ elif platform == 'win32':
 
 cats = ['Dark Fantasy', 'Fantasy Adventure', 'Sci-fi Adventure', 'Modern Adventure', 'Horror',
         'Love & Dating', 'Mystery/Thriller', 'Edutainment', 'Fan Fiction', 'Everything Else']
+
 mats = ['1 - (G) All ages', '2 - Young children', '3 - (PG) Most children',
         '4 - Young teens', '5 - (PG-13) Older teens', '6 - Young adults', '7 - (R) Adults']
+
 diffs = ['1 - no possible way to lose', '2 - walk in the park', '3 - trek through the forest', '4 - march in the swamp',
          '5 - run through the jungle', '6 - living in detroit', '7 - walking into mordor', '8 - licking your elbow']
-tags = ['Action Adventure', 'Animal Perspective', 'Anti-Hero', 'Based Off A True Story', 'Biblical', 'Contest Entry', 'CYOA Movie', 'Drama', 'Dystopia', 'Edgelord', 'Family Friendly', 'Fantasy', 'Female Protagonist', 'Foreign Language', 'Grimdark', 'Historical', 'Horror', 'Humor', 'LGBT', 'Mystery',
-        'Part Of A Series', 'Poetry', 'Post-apocalyptic', 'Previously Featured', 'Psychological', 'Puzzle', 'Quiz', 'Romance', 'RPG', 'Science Fiction', 'Serious', 'Socially Important', 'Spiritual', 'Sports', 'Superhero', 'Supernatural', 'Thriller', 'Villain Protagonist', 'War', 'Western', 'Zombie']
+
+tags = ['Action Adventure', 'Animal Perspective', 'Anti-Hero', 'Based Off A True Story', 'Biblical',
+        'Contest Entry', 'CYOA Movie', 'Drama', 'Dystopia', 'Edgelord', 'Family Friendly', 'Fantasy', 'Female Protagonist',
+        'Foreign Language', 'Grimdark', 'Historical', 'Horror', 'Humor', 'LGBT', 'Mystery',
+        'Part Of A Series', 'Poetry', 'Post-apocalyptic', 'Previously Featured', 'Psychological', 'Puzzle', 'Quiz',
+        'Romance', 'RPG', 'Science Fiction', 'Serious', 'Socially Important', 'Spiritual', 'Sports', 'Superhero',
+        'Supernatural', 'Thriller', 'Villain Protagonist', 'War', 'Western', 'Zombie']
 
 pages = []
-
-cysoe_optn = dict()
-cysoe_optn['input-width'] = 144
-cysoe_optn['input-heigt'] = 10
-cysoe_optn['output-width'] = 140
-cysoe_optn['output-heigt'] = 30
-cysoe_optn['output-font'] = 'Courier'
-cysoe_optn['output-font-size'] = 10
-cysoe_optn['opm-flow-manual'] = 'None'
-cysoe_optn['opm-resinsight'] = 'None'
-cysoe_optn['edit-command'] = 'None'
-
 
 #-----------------------------------------------#
 # PRE-PROCESSING                                #
@@ -52,41 +47,58 @@ cysoe_optn['edit-command'] = 'None'
 # GUI                                           #
 #-----------------------------------------------#
 
-mainmenu = [['File',  ['New', 'Open', 'Save', 'Save As', 'Export / Format']],
-            ['Edit',  ['Pages', 'Variables', 'Scripts', 'Items', 'Preferences'], ],
-            ['Help',  ['CYSOE Documentation', 'CYS Script Documentation', 'Advanced Editor Forum', 'About'], ]]
+# Menubar
+menubar = [['File',  ['New', 'Open', 'Save', 'Save As', 'Export / Format']],
+           ['Edit',  ['Pages', 'Variables', 'Scripts', 'Items', 'Preferences'], ],
+           ['Help',  ['CYSOE Documentation', 'CYS Script Documentation', 'Advanced Editor Forum', 'About'], ]]
 
-prop_layout = [[sg.T('Title:'), sg.Input(key='-TITLE-')],
-               [sg.T('Description:'), sg.Input(key='-DESC-')],
-               [sg.T('Category:'), sg.Combo(
-                   cats, enable_events=True, key='-CAT-')],
-               [sg.T('Maturity:'), sg.Combo(
-                   mats, enable_events=True, key='-MAT-')],
-               [sg.T('Difficulty:'), sg.Combo(
-                   diffs, enable_events=True, key='-DIFF-')],
-               [sg.T('Tags:'), sg.Combo(tags, enable_events=True, key='-TAGS-')]]
+# Layouts
+storygame_properties_layout = [[sg.T('Title:'), sg.Input(key='-TITLE-')],
+                               [sg.T('Description:'), sg.Input(key='-DESC-')],
+                               [sg.T('Category:'), sg.Combo(
+                                   cats, enable_events=True, key='-CAT-')],
+                               [sg.T('Maturity:'), sg.Combo(
+                                   mats, enable_events=True, key='-MAT-')],
+                               [sg.T('Difficulty:'), sg.Combo(
+                                   diffs, enable_events=True, key='-DIFF-')],
+                               [sg.T('Tags:'), sg.Combo(tags, enable_events=True, key='-TAGS-')]]
 
-items_layout = [[sg.B('Create New Item')]]
+items_layout = [[sg.B('Create New Item')],
+                [sg.T('ID#'), sg.B('Test')]]
 
-cnp_layout = [[sg.B('New Chapter')],
-              [sg.T('ID'), sg.T('Chapter Title'), sg.T('Chapter Start Page')],
-              [sg.T('1'), sg.Input(key='-CH_TITLE-'),
-               sg.Combo(pages, key='-CH_START-')],
-              [sg.B('Save Changes To Chapter'), sg.B('Delete Entire Chapter')],
-              [sg.T('Pages in Chapter 1')],
-              [sg.B('Create New Page')]]
+variables_layout = [[sg.B('Create New Variable')],
+                    [sg.T('Variable'), sg.T('Min'), sg.T('Max'),
+                     sg.T('Start'), sg.T('Disp. On Pg.')],
+                    [sg.B('SCORE'), sg.T('-'), sg.T('-'), sg.T('-'), sg.T('No')]]
 
-main_window = [[sg.Menu(mainmenu)],
-               [sg.TabGroup([[sg.Tab('Storygame Properties', prop_layout), sg.Tab(
-                   'Chapters & Pages', cnp_layout)]])],
-               [sg.B('Save'), sg.B('Save and Exit')]]
+scripts_layout = [[sg.B('Global Page Script')],
+                  [sg.B('Global Link Script')]]
 
-ipop = [[sg.B('New'), sg.B('Open'), sg.B('Exit')]]
+chapters_and_pages_layout = [[sg.B('New Chapter')],
+                             [sg.T('ID'), sg.T('Chapter Title'),
+                              sg.T('Chapter Start Page')],
+                             [sg.T('1'), sg.Input(key='-CH_TITLE-'),
+                              sg.Combo(pages, key='-CH_START-')],
+                             [sg.B('Save Changes To Chapter'),
+                              sg.B('Delete Entire Chapter')],
+                             [sg.T('Pages in Chapter 1')],
+                             [sg.B('Create New Page')]]
 
-init_pop = sg.Window('CYSOE', ipop, icon=cysoe_icon,
+main_window_layout = [[sg.Menu(menubar)],
+                      [sg.TabGroup([[sg.Tab('Storygame Properties', storygame_properties_layout), sg.Tab(
+                          'Chapters & Pages', chapters_and_pages_layout),
+                          sg.Tab('Items', items_layout),
+                          sg.Tab('Variables', variables_layout),
+                          sg.Tab('Scripts', scripts_layout)]])],
+                      [sg.B('Save'), sg.B('Save and Exit')]]
+
+initial_popup_layout = [[sg.B('New'), sg.B('Open'), sg.B('Exit')]]
+
+# Windows
+init_pop = sg.Window('CYSOE', initial_popup_layout, icon=cysoe_icon,
                      resizable=True, grab_anywhere=True)
 
-main = sg.Window('CYS Offline Editor', main_window,
+main = sg.Window('CYS Offline Editor', main_window_layout,
                  icon=cysoe_icon, resizable=True, grab_anywhere=True)
 
 #-----------------------------------------------#
